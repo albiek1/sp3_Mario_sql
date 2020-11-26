@@ -14,6 +14,7 @@ public class pizzaria {
     public static void main(String[] args) throws NumberFormatException, ArrayIndexOutOfBoundsException {
         Connection conn = null;
         Statement stmt = null;
+        menuSetup();
         try {
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
@@ -21,23 +22,8 @@ public class pizzaria {
             stmt = conn.createStatement();
             //setup
             String sql;
-            sql = "INSERT INTO pizza VALUES (1, 'Vesuvio', 'tomatsauce, ost, skinke, oregano', 57)";
-            stmt.executeUpdate(sql);
-            sql = "INSERT INTO pizza VALUES (2, 'Amerikaner', 'tomatsauce, ost, oksefars, oregano', 53)";
-            stmt.executeUpdate(sql);
-            sql = "INSERT INTO pizza VALUES (3, 'Cacciatore', 'tomatsauce, ost, pepperoni, oregano', 57)";
-            stmt.executeUpdate(sql);
-            sql = "INSERT INTO pizza VALUES (4, 'Carbona', 'tomatsauce, ost, kødsauce, spaghetti, cocktailpølser, oregano', 63)";
-            stmt.executeUpdate(sql);
-            sql = "INSERT INTO pizza VALUES (5, 'Dennis', 'tomatsauce, ost, skinke, pepperoni, cocktailpølser, oregano', 65)";
-            stmt.executeUpdate(sql);
-            sql = "INSERT INTO pizza VALUES (6, 'Bertil', 'tomatsauce, ost, bacon, oregano', 57)";
-            stmt.executeUpdate(sql);
-            sql = "INSERT INTO pizza VALUES (7, 'Silvia', 'tomatsauce, ost, pepperoni, rød peber, løg, oliven, oregano', 61)";
-            stmt.executeUpdate(sql);
-            sql = "INSERT INTO pizza VALUES (8, 'Victoria', 'tomatsauce, ost, skinke, ananas, champignon, løg, oregano', 61)";
-            stmt.executeUpdate(sql);
-            sql = "INSERT INTO pizza VALUES (9, '";
+            sql = "SELECT PizzaName, PizzaIngred, PizzaPrice FROM pizza";
+            ResultSet rs = stmt.executeQuery(sql);
             while (running) {
                 if (cmd.equals("0")) {
                     System.out.println(" " +
@@ -56,7 +42,7 @@ public class pizzaria {
                         cmd = "0";
                     }
                     case "2" -> {
-                        System.out.println("Input pizzas seeperated by space");
+                        System.out.println("Input pizzas seperated by space");
                         int totalPrice = 0;
                         String pizzas = input.nextLine();
                         String[] temp = pizzas.split(" ");
