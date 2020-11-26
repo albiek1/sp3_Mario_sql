@@ -51,13 +51,22 @@ public class pizzaria {
                         int totalPrice = 0;
                         String pizzas = input.nextLine();
                         String[] temp = pizzas.split(" ");
-                        for (String value : temp) {
-                            int tempNum = Integer.parseInt(value) - 1;
-                            totalPrice += pizzaMenu.get(tempNum).price;
+                        for(int i = 0; i < temp.length; i++){
+                            sql = "SELECT PizzaPrice FROM pizza WHERE idPizza =" + temp[i];
+                            rs = stmt.executeQuery(sql);
+                            while(rs.next()){
+                                int pizzaPrice = rs.getInt("PizzaPrice");
+                                totalPrice += pizzaPrice;
+                            }
                         }
                         String pizzasOrdered = "";
-                        for (String value : temp) {
-                            pizzasOrdered += pizzaMenu.get(Integer.parseInt(value) - 1).Name + " ";
+                        for (int i = 0; i < temp.length; i++) {
+                            sql = "SELECT PizzaName from pizza WHERE idPizza =" + temp[i];
+                            rs = stmt.executeQuery(sql);
+                            while(rs.next()){
+                                String pizzaName = rs.getString("PizzaName") + ", ";
+                                pizzasOrdered += pizzaName;
+                            }
                         }
                         System.out.println("pizzas ordered: " + pizzasOrdered);
                         System.out.println("pickup time");
