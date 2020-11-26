@@ -1,0 +1,49 @@
+@startuml
+
+class Pizza{
+String Name
+ArrayList<String> Ingredients
+price
+
+}
+
+class PizzaArray{
+    Object[] Pizza
+    size()
+}
+
+class Order{
+    ArrayList<Pizza>
+    float totalPrice
+    boolean actual
+}
+
+class AllOrders{
+    ArrayList<Orders>
+}
+
+class Customer{
+    Name
+    timeStamp
+}
+
+class actualOrders{
+    ArrayList<Order>
+    getTotalPrice
+    timeStamp
+}
+
+class PizzaDisplay{
+    all Pizzas
+    getName
+    getIngredients
+    getPrice
+}
+
+Pizza "1"-->"*" PizzaArray
+PizzaArray --> Order
+actualOrders --> AllOrders
+Order --> actualOrders
+actualOrders <-- Customer
+PizzaArray --> PizzaDisplay
+@enduml

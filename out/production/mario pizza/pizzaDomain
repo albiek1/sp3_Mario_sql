@@ -1,0 +1,13 @@
+@startuml
+left to right direction
+actor Customer
+actor Alfonso
+rectangle "Marios Pizzaria"{
+(TyperInd)<--Alfonso
+Customer-->(Menu)
+(Menu)->(Order)
+(Order)-->Alfonso
+(Forbrugsoversigt)<--Alfonso
+}
+
+@enduml
