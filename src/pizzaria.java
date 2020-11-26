@@ -22,8 +22,7 @@ public class pizzaria {
             stmt = conn.createStatement();
             //setup
             String sql;
-            sql = "SELECT PizzaName, PizzaIngred, PizzaPrice FROM pizza";
-            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs;
             while (running) {
                 if (cmd.equals("0")) {
                     System.out.println(" " +
@@ -36,8 +35,14 @@ public class pizzaria {
                 }
                 switch (cmd) {
                     case "1" -> {
-                        for (int i = 0; i < pizzaMenu.size(); i++) {
-                            System.out.println(i + ") " + pizzaMenu.get(i).Name + " : " + pizzaMenu.get(i).Ingredients + " : " + pizzaMenu.get(i).price);
+                        sql = "SELECT idPizza, PizzaName, PizzaIngred, PizzaPrice FROM pizza";
+                        rs = stmt.executeQuery(sql);
+                        while (rs.next()){
+                            int idPizza = rs.getInt("idPizza");
+                            String pizzaName = rs.getString("PizzaName");
+                            String pizzaIngred = rs.getString("PizzaIngred");
+                            int pizzaPrice = rs.getInt("PizzaPrice");
+                            System.out.println(idPizza + ": " + pizzaName + ": " + pizzaIngred + ": " + pizzaPrice);
                         }
                         cmd = "0";
                     }
