@@ -15,8 +15,14 @@ public class Pizza {
         return Name;
     }
 
-    public List<String> returnIngredients(){
-        return Ingredients;
+    public String returnIngredients(){
+        String ingredientString = "";
+        int i = 0;
+        for(i = 0; i < Ingredients.size()-1; i++){
+            ingredientString += Ingredients.get(i) + ", ";
+        }
+        ingredientString += Ingredients.get(i);
+        return ingredientString;
     }
 
     public int returnPrice(){

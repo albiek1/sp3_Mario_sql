@@ -23,8 +23,22 @@ public class pizzaria {
             //setup
             String sql;
             ResultSet rs;
+            sql = "SELECT COUNT(idPizza) FROM pizza";
+            rs = stmt.executeQuery(sql);
+            rs.next();
+            int pizzaCount = 14;
+            //sql = "INSERT INTO pizza VALUES (1, 'Vesuvio', 'tomatsauce, ost, skinke, oregano', 57)";
+            //stmt.executeUpdate(sql);
+            sql = "TRUNCATE TABLE pizza";
+            stmt.executeUpdate(sql);
+            for(int i = 0; i < pizzaCount; i++) {
+                Pizza temp = pizzaMenu.get(i);
+                sql = "INSERT INTO pizza VALUES " + "("+(i+1)+", '"+temp.Name+"', '"+temp.returnIngredients()+"', "+temp.price+")";
+                stmt.executeUpdate(sql);
+            }
             while (running) {
                 if (cmd.equals("0")) {
+                    System.out.println(pizzaCount);
                     System.out.println(" " +
                             "\n1) view menu" +
                             "\n2) create new order" +
@@ -51,6 +65,7 @@ public class pizzaria {
                         int totalPrice = 0;
                         String pizzas = input.nextLine();
                         String[] temp = pizzas.split(" ");
+                        String pizzasOrdered = "";
                         for(int i = 0; i < temp.length; i++){
                             sql = "SELECT PizzaPrice FROM pizza WHERE idPizza =" + temp[i];
                             rs = stmt.executeQuery(sql);
@@ -58,9 +73,6 @@ public class pizzaria {
                                 int pizzaPrice = rs.getInt("PizzaPrice");
                                 totalPrice += pizzaPrice;
                             }
-                        }
-                        String pizzasOrdered = "";
-                        for (int i = 0; i < temp.length; i++) {
                             sql = "SELECT PizzaName from pizza WHERE idPizza =" + temp[i];
                             rs = stmt.executeQuery(sql);
                             while(rs.next()){
@@ -188,7 +200,8 @@ public class pizzaria {
                         }
                         cmd = input.nextLine();
                     }
-                    case "5" -> running = false;
+                    case "5" ->
+                            running = false;
                     default -> {
                         System.out.println("please input valid number");
                         cmd = "0";
