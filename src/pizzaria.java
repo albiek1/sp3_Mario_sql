@@ -65,27 +65,36 @@ public class pizzaria {
                         int totalPrice = 0;
                         String pizzas = input.nextLine();
                         String[] temp = pizzas.split(" ");
+                        int pizzaTemp = temp.length;
                         String pizzasOrdered = "";
-                        for(int i = 0; i < temp.length; i++){
-                            sql = "SELECT PizzaPrice FROM pizza WHERE idPizza =" + temp[i];
+                        for (String value : temp) {
+                            sql = "SELECT PizzaPrice FROM pizza WHERE idPizza =" + value;
                             rs = stmt.executeQuery(sql);
-                            while(rs.next()){
+                            while (rs.next()) {
                                 int pizzaPrice = rs.getInt("PizzaPrice");
                                 totalPrice += pizzaPrice;
                             }
-                            sql = "SELECT PizzaName from pizza WHERE idPizza =" + temp[i];
+                            sql = "SELECT PizzaName from pizza WHERE idPizza =" + value;
                             rs = stmt.executeQuery(sql);
-                            while(rs.next()){
-                                String pizzaName = rs.getString("PizzaName") + ", ";
-                                pizzasOrdered += pizzaName;
+                            while(rs.next()) {
+                                pizzasOrdered += rs.getString("PizzaName")+" ";
                             }
                         }
+                        for(int l = 0; l < pizzaTemp-1; l++){
+                            sql = "SELECT PizzaName from pizza WHERE idPizza =" + temp[l];
+                            rs = stmt.executeQuery(sql);
+                            while(rs.next()) {
+                                String pizzaName = rs.getString("PizzaName");
+                                pizzasOrdered += pizzaName + ", ";
+                            }
+                        }
+                        System.out.println(pizzasOrdered);
                         System.out.println("pizzas ordered: " + pizzasOrdered);
                         System.out.println("pickup time");
                         int pickupTime = input.nextInt();
+                        //sql = "INPUT INTO orders VALUES ('"+pizzasOrdered+"', ";
                         Order o = new Order(pizzasOrdered, totalPrice, pickupTime, true);
                         orderList.add(o);
-                        pizzasOrdered = "";
                         for (Order s : orderList) {
                             System.out.println(s.pizzas + " : " + pickupTime + " : " + totalPrice);
                         }
