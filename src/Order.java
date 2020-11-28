@@ -4,9 +4,9 @@ import java.util.List;
 public class Order {
     String pizzas;
     int totalPrice;
-    int timeStamp;
+    String timeStamp;
     Boolean actual;
-    Order(String pizzas, int totalPrice, int timeStamp, Boolean actual){
+    Order(String pizzas, int totalPrice, String timeStamp, Boolean actual){
         this.pizzas = pizzas;
         this.totalPrice = totalPrice;
         this.timeStamp = timeStamp;
@@ -21,7 +21,7 @@ public class Order {
         return totalPrice;
     }
 
-    public int returnTime(){
+    public String returnTime(){
         return timeStamp;
     }
 
